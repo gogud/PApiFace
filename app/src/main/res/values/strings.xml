@@ -1,5 +1,4 @@
 <resources>
     <string name="app_name">PApiFace</string>
-
     <string name="pick_image_intent_text">Lütfen Resim Seçiniz</string>
 </resources>
