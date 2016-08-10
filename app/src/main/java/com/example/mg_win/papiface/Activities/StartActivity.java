@@ -59,40 +59,46 @@ public class StartActivity extends AppCompatActivity implements FaceRecognitionR
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case PICK_IMAGE_ID:
 
-                Bitmap bitmap = ImagePicker.getImageFromResult(this, resultCode, data);
+        Log.d(TAG, "RequestCode: " + requestCode + " ResultCode: " + resultCode);
 
-                SetGetImage setGetImage = new SetGetImage();
-                boolean isStored = setGetImage.storeImage(this, bitmap);
+        if (resultCode != 0) {
 
-                if (isStored) {
+            switch (requestCode) {
+                case PICK_IMAGE_ID:
+
+                    Bitmap bitmap = ImagePicker.getImageFromResult(this, resultCode, data);
+
+                    SetGetImage setGetImage = new SetGetImage();
+                    boolean isStored = setGetImage.storeImage(this, bitmap);
+
+                    if (isStored) {
                     /*
                     Intent intent = new Intent(this, MainActivity.class);
                     startActivity(intent);
                     finish();
                     */
 
-                    File file = getImageFromCache();
-                    byte[] imageArray = convertFileToByteArray(file);
-                    if (imageArray != null) {
+                        File file = getImageFromCache();
+                        byte[] imageArray = convertFileToByteArray(file);
+                        if (imageArray != null) {
 
-                        this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                        Toast.makeText(this,"Resim İşleniyor, Lütfen Bekleyiniz...",Toast.LENGTH_LONG).show();
+                            this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                            Toast.makeText(this, "Resim İşleniyor, Lütfen Bekleyiniz...", Toast.LENGTH_LONG).show();
 
-                        FaceRecognition faceRecognition = new FaceRecognition();
-                        faceRecognition.delegate = this;
-                        faceRecognition.execute("detect", imageArray);
+                            FaceRecognition faceRecognition = new FaceRecognition();
+                            faceRecognition.delegate = this;
+                            faceRecognition.execute("detect", imageArray);
+
+                        }
 
                     }
 
-                }
-
-                break;
-            default:
-                super.onActivityResult(requestCode, resultCode, data);
-                break;
+                    break;
+                default:
+                    super.onActivityResult(requestCode, resultCode, data);
+                    break;
+            }
         }
     }
 
@@ -125,6 +131,8 @@ public class StartActivity extends AppCompatActivity implements FaceRecognitionR
             return bFile;
         } else {
             Log.d(TAG, "- ConvertFileToByteArray: File is Empty!");
+
+            nullDataReturned();
             return null;
         }
     }
@@ -156,7 +164,7 @@ public class StartActivity extends AppCompatActivity implements FaceRecognitionR
 
     @Override
     public void nullDataReturned() {
-        Toast.makeText(this,"Yüz Bulunamadı, Lütfen Tekrar Deneyiniz...",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Yüz Bulunamadı, Lütfen Tekrar Deneyiniz...", Toast.LENGTH_SHORT).show();
 
         openGetPhotoOptions();
     }
@@ -166,6 +174,20 @@ public class StartActivity extends AppCompatActivity implements FaceRecognitionR
         bitmapArrayList = new ArrayList<Bitmap>();
 
         for (int i = 0; i < results.length; i++) {
+
+            if (results[i].x1 < 0) {
+                results[i].x1 = 0;
+            }
+            if (results[i].x2 < 0) {
+                results[i].x2 = 0;
+            }
+            if (results[i].y1 < 0) {
+                results[i].y1 = 0;
+            }
+            if (results[i].y2 < 0) {
+                results[i].y2 = 0;
+            }
+
             bitmapArrayList.add(convertToBitmap(results[i].x1, results[i].x2,
                     results[i].y1, results[i].y2));
         }
@@ -180,12 +202,12 @@ public class StartActivity extends AppCompatActivity implements FaceRecognitionR
         int height = y2 - y1;
         int width = x2 - x1;
 
+
         Bitmap bmp = BitmapFactory.decodeByteArray(convertFileToByteArray(getImageFromCache()), 0, convertFileToByteArray(getImageFromCache()).length);
         Bitmap tmpImage = Bitmap.createBitmap(bmp, x1, y1, width, height);
 
         return tmpImage;
     }
-
 
 
 }

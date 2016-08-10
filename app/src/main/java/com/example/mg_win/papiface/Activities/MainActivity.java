@@ -43,21 +43,6 @@ public class MainActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Send Image to FaceRecognition
-
-        /*
-        File file = getImageFromCache();
-        byte[] imageArray = convertFileToByteArray(file);
-        if (imageArray != null) {
-
-            //this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-
-            FaceRecognition faceRecognition = new FaceRecognition();
-            faceRecognition.delegate = this;
-            faceRecognition.execute("detect", imageArray);
-
-        }
-        */
         mContext = this.getApplicationContext();
 
         splittepBitmaps = getIntent().getParcelableArrayListExtra("images");
@@ -87,4 +72,10 @@ public class MainActivity extends AppCompatActivity  {
         Toast.makeText(this,"Lütfen Resim Seçiniz",Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, StartActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

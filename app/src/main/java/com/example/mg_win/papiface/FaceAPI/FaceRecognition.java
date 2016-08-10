@@ -16,6 +16,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.ByteArrayBody;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
@@ -23,6 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 /**
  * Created by mg-Win on 9.08.2016.
@@ -92,7 +94,11 @@ public class FaceRecognition extends AsyncTask<Object, Boolean, FaceRecognition.
             }
 
         } else if (objects[0].toString() == "identify") {
-            faceRecognitionResults = identify((byte[]) objects[1]);
+            try {
+                faceRecognitionResults = identify((byte[]) objects[1]);
+            } catch (UnsupportedEncodingException e) {
+                return null;
+            }
             if (faceRecognitionResults != null) {
                 return faceRecognitionResults;
             }
@@ -215,7 +221,7 @@ public class FaceRecognition extends AsyncTask<Object, Boolean, FaceRecognition.
     }
 
     // Identify Face
-    public static FaceRecognitionResult[] identify(byte[] imageArray) {
+    public static FaceRecognitionResult[] identify(byte[] imageArray) throws UnsupportedEncodingException {
         Log.d(TAG, " identify face");
 
         FaceRecognitionResult[] faceRecognitionResults = null;
@@ -227,6 +233,9 @@ public class FaceRecognition extends AsyncTask<Object, Boolean, FaceRecognition.
         MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
 
         entity.addPart("photo", new ByteArrayBody(imageArray, "image/jpeg", "photo.jpg"));
+
+            entity.addPart("n", new StringBody("10"));
+
         post.setEntity(entity);
 
         try {
@@ -249,14 +258,17 @@ public class FaceRecognition extends AsyncTask<Object, Boolean, FaceRecognition.
                         faceRecognitionResults[i].thumbnail = jsonObject.getJSONArray("results").getJSONObject(i).getJSONObject("face").getString("thumbnail");
                     }
 
+                    faceRecognitionResults[0].methodName = "identify";
+                    return faceRecognitionResults;
                 } else {
+                    /*
                     faceRecognitionResults = new FaceRecognitionResult[1];
                     faceRecognitionResults[0] = new FaceRecognitionResult();
                     faceRecognitionResults[0].resultCode = "NO_FACES";
+                    */
+                    return null;
                 }
-                faceRecognitionResults[0].methodName = "identify";
 
-                return faceRecognitionResults;
             }
         } catch (IOException e) {
             Log.d(TAG, "Cannot execute post request: " + e.getMessage());
