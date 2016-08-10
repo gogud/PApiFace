@@ -5,4 +5,5 @@ package com.example.mg_win.papiface.FaceAPI;
  */
 public interface FaceRecognitionResponse {
     void processFaceRecognition(FaceRecognition.FaceRecognitionResult[] results);
+    void nullDataReturned();
 }

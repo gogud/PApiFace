@@ -1,8 +1,14 @@
 package com.example.mg_win.papiface.FaceAPI;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
+
+import com.example.mg_win.papiface.Activities.MainActivity;
+import com.example.mg_win.papiface.Activities.StartActivity;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -64,6 +70,7 @@ public class FaceRecognition extends AsyncTask<Object, Boolean, FaceRecognition.
             delegate.processFaceRecognition(results);
         } else {
             Log.d(TAG, "onPostExecute: Result is NULL!");
+            delegate.nullDataReturned();
         }
     }
 
@@ -138,8 +145,9 @@ public class FaceRecognition extends AsyncTask<Object, Boolean, FaceRecognition.
                         faceRecognitionResults[i].y2 = Integer.parseInt(faceArray.getJSONObject(i).getString("y2"));
 
                         faceRecognitionResults[0].methodName = "detect";
-                        return faceRecognitionResults;
+
                     }
+                    return faceRecognitionResults;
                 } else {
                     /*
                     faceRecognitionResults = new FaceRecognitionResult[1];
