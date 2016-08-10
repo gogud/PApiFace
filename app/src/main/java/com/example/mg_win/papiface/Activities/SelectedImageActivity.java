@@ -31,6 +31,11 @@ public class SelectedImageActivity extends AppCompatActivity  implements FaceRec
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selected_image);
 
+        // Bar icon
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.logo_icon);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+
         ImageView imageView = (ImageView) findViewById(R.id.selectedImageView);
 
         Bundle extras = getIntent().getExtras();

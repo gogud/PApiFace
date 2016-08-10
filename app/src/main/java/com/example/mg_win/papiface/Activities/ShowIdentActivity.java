@@ -24,6 +24,11 @@ public class ShowIdentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_ident);
 
+        // Bar icon
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.logo_icon);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+
         Bundle extras = getIntent().getExtras();
         byte[] baseImage = extras.getByteArray("BaseImage");
         resultArrayList = extras.getStringArrayList("IdentResults");

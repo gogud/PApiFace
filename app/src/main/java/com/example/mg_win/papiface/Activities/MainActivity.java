@@ -43,6 +43,11 @@ public class MainActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Bar icon
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.logo_icon);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+
         mContext = this.getApplicationContext();
 
         splittepBitmaps = getIntent().getParcelableArrayListExtra("images");

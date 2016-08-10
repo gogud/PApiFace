@@ -38,6 +38,11 @@ public class StartActivity extends AppCompatActivity implements FaceRecognitionR
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
+        // Bar icon
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.logo_icon);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+
         this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
         // Search Button click event

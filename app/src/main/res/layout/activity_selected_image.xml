@@ -29,6 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/identifyButton"
+            android:textColor="@color/startButtonColor"
             android:text="Sorgula"
             android:onClick="buttonIdentifyClicked"/>
 
@@ -36,6 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/enrollButton"
+            android:textColor="@color/startButtonColor"
             android:layout_marginLeft="30dp"
             android:text="Kaydet"
             android:onClick="buttonEnrollClicked"/>
