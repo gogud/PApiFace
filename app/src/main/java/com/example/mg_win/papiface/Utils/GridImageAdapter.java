@@ -2,6 +2,7 @@ package com.example.mg_win.papiface.Utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -37,8 +38,12 @@ public class GridImageAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
 
+        DisplayMetrics displayMetrics = mContext.getResources().getDisplayMetrics();
+        int width = (int) (displayMetrics.widthPixels / 3.2);
+        int height = (int) (displayMetrics.heightPixels / 3.2);
+
         ImageView imageView = new ImageView(mContext);
-        imageView.setLayoutParams(new GridView.LayoutParams(300, 300));
+        imageView.setLayoutParams(new GridView.LayoutParams(width, width));
         imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         imageView.setPadding(1, 1, 1, 1);
 
