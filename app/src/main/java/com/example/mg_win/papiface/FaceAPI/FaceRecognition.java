@@ -68,7 +68,7 @@ public class FaceRecognition extends AsyncTask<Object, Boolean, FaceRecognition.
     @Override
     protected void onPostExecute(FaceRecognitionResult[] results) {
         //super.onPostExecute(results);
-        if (results != null ) {
+        if (results != null) {
             delegate.processFaceRecognition(results);
         } else {
             Log.d(TAG, "onPostExecute: Result is NULL!");
@@ -233,8 +233,7 @@ public class FaceRecognition extends AsyncTask<Object, Boolean, FaceRecognition.
         MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
 
         entity.addPart("photo", new ByteArrayBody(imageArray, "image/jpeg", "photo.jpg"));
-
-            entity.addPart("n", new StringBody("10"));
+        entity.addPart("n", new StringBody("10"));
 
         post.setEntity(entity);
 

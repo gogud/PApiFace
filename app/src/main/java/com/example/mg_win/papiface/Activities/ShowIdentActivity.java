@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -18,6 +19,8 @@ public class ShowIdentActivity extends AppCompatActivity {
 
     public static ArrayList<String> resultArrayList;
     private ListView listView;
+
+    private static String TAG = "ShowIdentActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +36,14 @@ public class ShowIdentActivity extends AppCompatActivity {
         byte[] baseImage = extras.getByteArray("BaseImage");
         resultArrayList = extras.getStringArrayList("IdentResults");
 
+        Log.d(TAG, "ResultArrayList: " + resultArrayList);
+
         Bitmap bmp = BitmapFactory.decodeByteArray(baseImage, 0, baseImage.length);
         ImageView imageBase = (ImageView) findViewById(R.id.imageViewSource);
 
         imageBase.setImageBitmap(bmp);
+
+
 
 
         CustomListAdapter customListAdapter = new CustomListAdapter(this, resultArrayList);

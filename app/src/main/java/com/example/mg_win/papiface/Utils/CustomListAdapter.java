@@ -1,6 +1,7 @@
 package com.example.mg_win.papiface.Utils;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ public class CustomListAdapter extends ArrayAdapter<String> {
     //private Integer[] imageid;
     private Activity context;
 
+    private static String TAG = "CustomListAdapter";
 
     public CustomListAdapter(Activity context, ArrayList<String> resultContent) {
         super(context, R.layout.activity_ident_result2, resultContent);
@@ -32,7 +34,11 @@ public class CustomListAdapter extends ArrayAdapter<String> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
-        View listViewItem = inflater.inflate(R.layout.activity_ident_result2, null, true);
+        //View listViewItem = inflater.inflate(R.layout.activity_ident_result2, null, true);
+        View listViewItem = inflater.inflate(R.layout.activity_ident_result2, parent, false);
+
+
+        Log.d(TAG, "Position = " + position + "\tContainer = " + resultContent.get(position) );
 
         if (position % 2 == 0) {
 
@@ -42,12 +48,9 @@ public class CustomListAdapter extends ArrayAdapter<String> {
             ImageView imageView = (ImageView) listViewItem.findViewById(R.id.imageView_score);
             //imageView.setImageBitmap(IdentResultActivity.splittedBitmaps.get(position + 1));
 
-            Picasso.with(this.context).load(resultContent.get(position + 1)).into(imageView);
+            Picasso.with(this.context).load(resultContent.get(position + 1)).placeholder(R.drawable.progress_animation).skipMemoryCache().into(imageView);
 
         }
-
-
-
         return  listViewItem;
 
     }
